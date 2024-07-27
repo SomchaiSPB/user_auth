@@ -2,7 +2,7 @@
 
 # User Authentication and Product Management Service
 
-This project provides a RESTful API for user authentication and product management, implemented in Go. It supports multiple storage options and is containerized using Docker for easy deployment.
+This project provides a RESTful API for user authentication and product management, implemented in Go. The application supports multiple storage options and is containerized using Docker for easy deployment.
 
 ## Features
 
@@ -15,52 +15,65 @@ This project provides a RESTful API for user authentication and product manageme
 ### User Endpoints
 
 - **Create User**
-    - **URL**: `/users`
-    - **Method**: `POST`
-    - **Request Body**: `CreateUserDTO`
-    - **Response**: `User`
-    - **Description**: Creates a new user. Returns an error if the username already exists.
+  - **URL**: `/users`
+  - **Method**: `POST`
+  - **Request Body**: `CreateUserDTO`
+  - **Response**: `User`
+  - **Description**: Creates a new user. Returns an error if the username already exists.
 
 - **Authenticate User**
-    - **URL**: `/auth`
-    - **Method**: `POST`
-    - **Request Body**: `AuthUserRequestDTO`
-    - **Response**: `AuthUserResponseDTO` (JWT Token)
-    - **Description**: Authenticates a user and returns a JWT token.
+  - **URL**: `/auth`
+  - **Method**: `POST`
+  - **Request Body**: `AuthUserRequestDTO`
+  - **Response**: `AuthUserResponseDTO` (JWT Token)
+  - **Description**: Authenticates a user and returns a JWT token.
 
 ### Product Endpoints
 
 - **Get Product**
-    - **URL**: `/products/{name}`
-    - **Method**: `GET`
-    - **Response**: `Product`
-    - **Description**: Retrieves product details by name, with case-insensitive search.
+  - **URL**: `/products/{name}`
+  - **Method**: `GET`
+  - **Response**: `Product`
+  - **Description**: Retrieves product details by name, with case-insensitive search.
 
 - **Get Products**
-    - **URL**: `/products`
-    - **Method**: `GET`
-    - **Response**: `[]Product`
-    - **Description**: Retrieves a list of products with pagination.
+  - **URL**: `/api/v1/products`
+  - **Method**: `GET`
+  - **Response**: `[]Product`
+  - **Description**: Retrieves a list of all products.
+
+## Default Data
+
+The application comes with default data for testing purposes:
+
+- **Default User**:
+  - **Username**: `admin@admin.com`
+  - **Password**: `12345678`
+
+- **Default Product**:
+  - **Name**: `test`
+
+You can use these credentials and product to test the API endpoints.
 
 ## Storage Options
 
 The application supports two storage options:
 
 1. **PostgreSQL**:
-    - Used when the application is run in Docker.
-    - Ideal for production environments.
+  - Used when the application is run in Docker.
+  - Ideal for production environments.
 2. **SQLite**:
-    - Available for both Docker and binary deployments.
-    - Suitable for development, testing, or small-scale deployments.
+  - Available for both Docker and binary deployments.
+  - Suitable for development, testing, or small-scale deployments.
 
-You can select the storage type using the `APP_STORAGE` environment variable. The default storage type is PostgreSQL.
+You can select the storage type using the `APP_STORAGE` environment variable. The default storage type is PostgreSQL, but it can be changed to SQLite. If SQLite is used, running the PostgreSQL database via Docker Compose is not mandatory.
 
 ## Configuration
 
 An example configuration is provided in the `.env.example` file. Copy this file to `.env` and adjust the settings as needed:
 
 ```env
-APP_HTTP_PORT=6666
+APP_HTTP_PORT=6543
 APP_ENV=local
 APP_STORAGE=postgres  # storage types: postgres, sqlite
 APP_WITH_FAKE_DATA=true
@@ -70,8 +83,8 @@ DB_SQLITE_FILE=db.sqlite3
 
 AUTH_JWT_SECRET=test123
 
-DB_HOST=localhost
-DB_PORT=5555
+DB_HOST=db  # use 'db' for Docker, otherwise configure as needed
+DB_PORT=5432
 DB_USER=postgres
 DB_PASSWORD=postgres
 DB_NAME=user_auth
@@ -106,6 +119,16 @@ For local development with SQLite:
 
 1. Set `APP_STORAGE=sqlite` in your `.env` file.
 2. Run the application binary.
+
+## API Documentation
+
+The HTTP API documentation can be viewed at:
+
+```
+http://localhost:6543/swagger/index.html#/
+```
+
+Replace `6543` with the value of `APP_HTTP_PORT` if it has been changed.
 
 ## TODO
 

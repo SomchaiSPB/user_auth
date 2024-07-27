@@ -131,6 +131,7 @@ func (a *App) router() *chi.Mux {
 	r.Route("/api/v1", func(r chi.Router) {
 		r.Use(a.ApiTokenMiddleware)
 		r.Get("/product", a.HandleGetProduct)
+		r.Get("/products", a.HandleGetProducts)
 	})
 
 	return r

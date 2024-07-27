@@ -7,6 +7,12 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strconv"
+)
+
+const (
+	defaultPage    = 1
+	defaultPerPage = 1000
 )
 
 type ErrorResponse struct {
@@ -83,6 +89,42 @@ func (a *App) HandleGetProduct(w http.ResponseWriter, r *http.Request) {
 	productName := r.URL.Query().Get("name")
 
 	product, err := a.productSvc.GetProduct(productName)
+
+	if err != nil {
+		code := http.StatusInternalServerError
+
+		if errors.Is(err, service.ErrEmptyRequestName) {
+			code = http.StatusBadRequest
+		}
+		if errors.Is(err, service.ErrProductNotFound) {
+			code = http.StatusNotFound
+		}
+
+		respondWithErr(w, err, code)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(product)
+}
+
+func (a *App) HandleGetProducts(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query()
+
+	pageStr := query.Get("page")
+	perPageStr := query.Get("perPage")
+
+	page, err := strconv.Atoi(pageStr)
+	if err != nil || page <= 0 {
+		page = defaultPage
+	}
+
+	perPage, err := strconv.Atoi(perPageStr)
+	if err != nil || perPage <= 0 {
+		perPage = defaultPerPage
+	}
+
+	product, err := a.productSvc.GetProducts(page, perPage)
 
 	if err != nil {
 		code := http.StatusInternalServerError

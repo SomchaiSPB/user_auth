@@ -12,5 +12,6 @@ type ProductRepository interface {
 	Create(p *entity.Product) (*entity.Product, error)
 	GetByID(id uint) (*entity.Product, error)
 	Get(limit, offset int) ([]*entity.Product, error)
+	GetByName(name string) (*entity.Product, error)
 	GetWithFilters(filters ...Filter) ([]*entity.Product, error)
 }

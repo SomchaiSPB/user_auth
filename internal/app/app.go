@@ -216,7 +216,7 @@ func (a *App) addFixtures() error {
 			}
 		} else {
 			p = &entity.Product{
-				Name:        fake.Beer().Name(),
+				Name:        fmt.Sprintf("%d:%s", i, fake.Beer().Name()),
 				Description: fake.Address().Address(),
 				Price:       fake.Float64(1, 100, 10000),
 			}

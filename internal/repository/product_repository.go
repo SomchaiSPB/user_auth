@@ -29,6 +29,12 @@ func (r ProductDBRepository) Get(limit, offset int) ([]*entity.Product, error) {
 	return products, r.db.Limit(limit).Offset(offset).Find(&products).Error
 }
 
+func (r ProductDBRepository) GetByName(name string) (*entity.Product, error) {
+	var p *entity.Product
+
+	return p, r.db.Where("LOWER(name) = LOWER(?)", name).First(&p).Error
+}
+
 func (r ProductDBRepository) GetWithFilters(filters ...Filter) ([]*entity.Product, error) {
 	var products []*entity.Product
 

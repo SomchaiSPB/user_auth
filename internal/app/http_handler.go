@@ -80,5 +80,24 @@ func (a *App) HandleAuthUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) HandleGetProduct(w http.ResponseWriter, r *http.Request) {
+	productName := r.URL.Query().Get("name")
 
+	product, err := a.productSvc.GetProduct(productName)
+
+	if err != nil {
+		code := http.StatusInternalServerError
+
+		if errors.Is(err, service.ErrEmptyRequestName) {
+			code = http.StatusBadRequest
+		}
+		if errors.Is(err, service.ErrProductNotFound) {
+			code = http.StatusNotFound
+		}
+
+		respondWithErr(w, err, code)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(product)
 }

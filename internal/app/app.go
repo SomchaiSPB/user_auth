@@ -207,10 +207,19 @@ func (a *App) addFixtures() error {
 	}
 
 	for i := 0; i < 20; i++ {
-		p := &entity.Product{
-			Name:        fake.Beer().Name(),
-			Description: fake.Address().Address(),
-			Price:       fake.Float64(1, 100, 10000),
+		var p *entity.Product
+		if i == 0 {
+			p = &entity.Product{
+				Name:        "test",
+				Description: fake.Address().Address(),
+				Price:       333,
+			}
+		} else {
+			p = &entity.Product{
+				Name:        fake.Beer().Name(),
+				Description: fake.Address().Address(),
+				Price:       fake.Float64(1, 100, 10000),
+			}
 		}
 
 		if _, err := productRepo.Create(p); err != nil {

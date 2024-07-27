@@ -31,7 +31,7 @@ This project provides a RESTful API for user authentication and product manageme
 ### Product Endpoints
 
 - **Get Product**
-  - **URL**: `/products/{name}`
+  - **URL**: `/product?name={productName}`
   - **Method**: `GET`
   - **Response**: `Product`
   - **Description**: Retrieves product details by name, with case-insensitive search.

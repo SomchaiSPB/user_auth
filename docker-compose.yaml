@@ -1,0 +1,29 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+
+version: '3'
+
+services:
+  app:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile
+    volumes:
+      - db_data:/app/db_data
+    restart: on-failure
+
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_NAME}"
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+#      - ./build/db:/docker-entrypoint-initdb.d/
+    networks:
+      - backend

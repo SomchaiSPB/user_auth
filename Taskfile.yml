@@ -5,3 +5,7 @@ tasks:
     cmds:
       - docker-compose up -d --build
     silent: true
+
+  swag_init:
+    cmd:
+      swag init -g cmd/main.go

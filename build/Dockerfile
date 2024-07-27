@@ -3,8 +3,11 @@
 FROM golang:1.22-alpine AS build_base
 WORKDIR /app
 
+RUN apk add --no-cache gcc musl-dev
+
 COPY . .
-RUN go mod download
+
+RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o ./user_auth ./cmd/main.go
 
 RUN go build -o ./user_auth ./cmd/main.go
 

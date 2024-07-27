@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	_ "github.com/SomchaiSPB/user-auth/docs"
 	"github.com/SomchaiSPB/user-auth/internal/config"
 	"github.com/SomchaiSPB/user-auth/internal/custom_middleware"
 	"github.com/SomchaiSPB/user-auth/internal/entity"
@@ -14,6 +15,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jaswdr/faker"
+	httpSwagger "github.com/swaggo/http-swagger/v2"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -122,6 +124,10 @@ func (a *App) router() *chi.Mux {
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK"))
 	})
+
+	r.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL(fmt.Sprintf("%s:%s/%s", "http://localhost", a.config.HttpPort(), "swagger/doc.json")),
+	))
 
 	r.Route("/auth", func(r chi.Router) {
 		r.Post("/sign-up", a.HandleCreateUser)

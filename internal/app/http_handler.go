@@ -41,8 +41,8 @@ func respondWithErr(w http.ResponseWriter, err error, code int) {
 // @Tags users
 // @Accept  json
 // @Produce  json
-// @Param   user  body  CreateUserDTO  true  "User Data"
-// @Success 201 {object} User
+// @Param   user  body  dto.CreateUserDTO  true  "User Data"
+// @Success 201 {object} entity.User
 // @Failure 400 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Router /users [post]
@@ -77,8 +77,8 @@ func (a *App) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
 // @Tags auth
 // @Accept  json
 // @Produce  json
-// @Param   credentials  body  AuthUserRequestDTO  true  "Authentication data"
-// @Success 200 {object} AuthUserResponseDTO
+// @Param   credentials  body  dto.AuthUserRequestDTO  true  "Authentication data"
+// @Success 200 {object} dto.AuthUserResponseDTO
 // @Failure 401 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Router /auth [post]
@@ -113,7 +113,7 @@ func (a *App) HandleAuthUser(w http.ResponseWriter, r *http.Request) {
 // @Tags products
 // @Produce  json
 // @Param   name  path  string  true  "Product Name"
-// @Success 200 {object} Product
+// @Success 200 {object} entity.Product
 // @Failure 401 {object} ErrorResponse
 // @Failure 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
@@ -146,7 +146,7 @@ func (a *App) HandleGetProduct(w http.ResponseWriter, r *http.Request) {
 // @Description This endpoint retrieves a products list
 // @Tags productsList
 // @Produce  json
-// @Success 200 {object} []Product
+// @Success 200 {object} []entity.Product
 // @Failure 401 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Router /products/{name} [get]

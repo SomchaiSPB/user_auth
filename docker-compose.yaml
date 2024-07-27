@@ -12,20 +12,22 @@ services:
     volumes:
       - db_data:/app/db_data
     restart: on-failure
+    ports:
+      - "${APP_HTTP_PORT}:${APP_HTTP_PORT}"
     depends_on:
       - db
 
   db:
-    image: postgres:14.1-alpine
+    env_file:
+      - .env
+    image: postgres
     restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
     environment:
+      POSTGRES_DB: "${DB_NAME}"
       POSTGRES_USER: "${DB_USER}"
       POSTGRES_PASSWORD: "${DB_PASSWORD}"
-      POSTGRES_DB: "${DB_NAME}"
-    ports:
-      - "${DB_PORT}:5432"
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data
 
 
 volumes:

@@ -35,6 +35,17 @@ func respondWithErr(w http.ResponseWriter, err error, code int) {
 	w.Write(byteResp)
 }
 
+// HandleCreateUser creates a new user
+// @Summary Create a new user
+// @Description This endpoint creates a new user with a username and password
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param   user  body  CreateUserDTO  true  "User Data"
+// @Success 201 {object} User
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /users [post]
 func (a *App) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
 	data, err := io.ReadAll(r.Body)
 
@@ -60,6 +71,17 @@ func (a *App) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
 	w.Write(u)
 }
 
+// HandleAuthUser authenticates a user
+// @Summary Authenticate a user
+// @Description This endpoint authenticates a user and returns a JWT token
+// @Tags auth
+// @Accept  json
+// @Produce  json
+// @Param   credentials  body  AuthUserRequestDTO  true  "Authentication data"
+// @Success 200 {object} AuthUserResponseDTO
+// @Failure 401 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /auth [post]
 func (a *App) HandleAuthUser(w http.ResponseWriter, r *http.Request) {
 	data, err := io.ReadAll(r.Body)
 
@@ -85,6 +107,17 @@ func (a *App) HandleAuthUser(w http.ResponseWriter, r *http.Request) {
 	w.Write(response)
 }
 
+// HandleGetProduct retrieves a product
+// @Summary Retrieve a product
+// @Description This endpoint retrieves a product by name
+// @Tags products
+// @Produce  json
+// @Param   name  path  string  true  "Product Name"
+// @Success 200 {object} Product
+// @Failure 401 {object} ErrorResponse
+// @Failure 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /products/{name} [get]
 func (a *App) HandleGetProduct(w http.ResponseWriter, r *http.Request) {
 	productName := r.URL.Query().Get("name")
 
@@ -108,6 +141,15 @@ func (a *App) HandleGetProduct(w http.ResponseWriter, r *http.Request) {
 	w.Write(product)
 }
 
+// HandleGetProducts retrieves a products list
+// @Summary Retrieve a products list
+// @Description This endpoint retrieves a products list
+// @Tags productsList
+// @Produce  json
+// @Success 200 {object} []Product
+// @Failure 401 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /products/{name} [get]
 func (a *App) HandleGetProducts(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 

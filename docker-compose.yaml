@@ -12,6 +12,8 @@ services:
     volumes:
       - db_data:/app/db_data
     restart: on-failure
+    depends_on:
+      - db
 
   db:
     image: postgres:14.1-alpine
@@ -21,9 +23,11 @@ services:
       POSTGRES_PASSWORD: "${DB_PASSWORD}"
       POSTGRES_DB: "${DB_NAME}"
     ports:
-      - "${DB_PORT}:${DB_PORT}"
+      - "${DB_PORT}:5432"
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
-#      - ./build/db:/docker-entrypoint-initdb.d/
-    networks:
-      - backend
+
+
+volumes:
+  db_data:
+    driver: local

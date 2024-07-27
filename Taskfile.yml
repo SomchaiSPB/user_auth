@@ -1,7 +1,7 @@
 version: '3'
 
 tasks:
-  generate_proto:
+  up:
     cmds:
-      - protoc --proto_path=api/proto --go_out=api/pb --go-grpc_out=api/pb api/proto/*.proto
+      - docker-compose up -d --build
     silent: true

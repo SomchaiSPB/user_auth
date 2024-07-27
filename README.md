@@ -15,14 +15,14 @@ This project provides a RESTful API for user authentication and product manageme
 ### User Endpoints
 
 - **Create User**
-  - **URL**: `/users`
+  - **URL**: `/auth/sign-up`
   - **Method**: `POST`
   - **Request Body**: `CreateUserDTO`
   - **Response**: `User`
   - **Description**: Creates a new user. Returns an error if the username already exists.
 
 - **Authenticate User**
-  - **URL**: `/auth`
+  - **URL**: `/auth/sign-in`
   - **Method**: `POST`
   - **Request Body**: `AuthUserRequestDTO`
   - **Response**: `AuthUserResponseDTO` (JWT Token)
@@ -31,7 +31,7 @@ This project provides a RESTful API for user authentication and product manageme
 ### Product Endpoints
 
 - **Get Product**
-  - **URL**: `/product?name={productName}`
+  - **URL**: `/api/v1/product?name={productName}`
   - **Method**: `GET`
   - **Response**: `Product`
   - **Description**: Retrieves product details by name, with case-insensitive search.

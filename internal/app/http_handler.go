@@ -112,6 +112,7 @@ func (a *App) HandleAuthUser(w http.ResponseWriter, r *http.Request) {
 // @Description This endpoint retrieves a product by name
 // @Tags products
 // @Produce  json
+// @Security BearerAuth
 // @Param   name  query  string  true  "Product Name"
 // @Success 200 {object} entity.Product
 // @Failure 401 {object} ErrorResponse
@@ -146,6 +147,7 @@ func (a *App) HandleGetProduct(w http.ResponseWriter, r *http.Request) {
 // @Description This endpoint retrieves a products list
 // @Tags productsList
 // @Produce  json
+// @Security BearerAuth
 // @Success 200 {object} []entity.Product
 // @Failure 401 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse

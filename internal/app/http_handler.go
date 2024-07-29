@@ -112,12 +112,12 @@ func (a *App) HandleAuthUser(w http.ResponseWriter, r *http.Request) {
 // @Description This endpoint retrieves a product by name
 // @Tags products
 // @Produce  json
-// @Param   name  path  string  true  "Product Name"
+// @Param   name  query  string  true  "Product Name"
 // @Success 200 {object} entity.Product
 // @Failure 401 {object} ErrorResponse
 // @Failure 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /product?name={name} [get]
+// @Router /api/v1/product [get]
 func (a *App) HandleGetProduct(w http.ResponseWriter, r *http.Request) {
 	productName := r.URL.Query().Get("name")
 
@@ -149,7 +149,7 @@ func (a *App) HandleGetProduct(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} []entity.Product
 // @Failure 401 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /products [get]
+// @Router /api/v1/products [get]
 func (a *App) HandleGetProducts(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 

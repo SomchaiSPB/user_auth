@@ -45,7 +45,7 @@ func respondWithErr(w http.ResponseWriter, err error, code int) {
 // @Success 201 {object} entity.User
 // @Failure 400 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /users [post]
+// @Router /auth/sign-up [post]
 func (a *App) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
 	data, err := io.ReadAll(r.Body)
 
@@ -81,7 +81,7 @@ func (a *App) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} dto.AuthUserResponseDTO
 // @Failure 401 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /auth [post]
+// @Router /auth/sign-in [post]
 func (a *App) HandleAuthUser(w http.ResponseWriter, r *http.Request) {
 	data, err := io.ReadAll(r.Body)
 
@@ -117,7 +117,7 @@ func (a *App) HandleAuthUser(w http.ResponseWriter, r *http.Request) {
 // @Failure 401 {object} ErrorResponse
 // @Failure 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /products/{name} [get]
+// @Router /product?name={name} [get]
 func (a *App) HandleGetProduct(w http.ResponseWriter, r *http.Request) {
 	productName := r.URL.Query().Get("name")
 
@@ -149,7 +149,7 @@ func (a *App) HandleGetProduct(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} []entity.Product
 // @Failure 401 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /products/{name} [get]
+// @Router /products [get]
 func (a *App) HandleGetProducts(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 
